@@ -65,3 +65,36 @@ function initlist() {
   return { data };
 ```
 
+
+
+
+
+## 第 5 天思路
+
+### 使用 getTempFIleURL 获取临时云存储路径
+
+```js
+async function cloudtohttp(src) {
+    if (src == "") {
+        return "";
+    }
+
+    // let first = src.indexOf('.');
+    // let end = src.indexOf('/', first);
+    // return 'https://' + src.slice(first + 1, end) + '.tcb.qcloud.la/' + src.slice(end + 1, src.length);
+
+    /**
+     * 改成 getTempFileURL
+     * 这里使用了 async/await, 因此调用 cloudtohttp 的方法也得加上 async/await
+     * 否则返回的 res 就是 undefined 了
+     */
+    const res = (await cloud.getTempFileURL({
+        fileList: [src]
+    })).fileList[0].tempFileURL
+    console.log(res);
+
+    return res
+
+}
+```
+
